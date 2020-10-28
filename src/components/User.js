@@ -1,5 +1,4 @@
 import React from 'react'
-import axios from 'axios';
 import styled from 'styled-components'
 
 const Main = styled.div`
@@ -31,7 +30,6 @@ const Card = styled.div`
   }
 `
 
-
 const UserCard = (props) => {
   return (
     <Main>
@@ -54,28 +52,21 @@ const UserCard = (props) => {
 export const FollowerCard = (props) => {
   return (
     <Main>
-      {props.followerData.forEach(item => {
-        axios.get(item.url)
-          .then(res=>{
-            console.log(res.data.avatar_url);
-
-          })
-          .catch(err=>{debugger})
-      })}
-      {/* <Card>
-        <img src={newFollower.avatar_url} alt='' />
+      <Card>
+        <img src={props.followerData.avatar_url} alt='' />
         <div>
-          <h3>{newFollower.name}</h3>
-          <p>Username: {newFollower.login}</p>
-          <p>Location: {newFollower.location}</p>
-          <p>Profile: <a href={newFollower.html_url}>{newFollower.html_url}</a></p>
-          <p>Followers: {newFollower.followers}</p>
-          <p>Following: {newFollower.following}</p>
-          <p>Bio: {newFollower.bio}</p>
+          <h3>{props.followerData.name}</h3>
+          <p>Username: {props.followerData.login}</p>
+          <p>Location: {props.followerData.location}</p>
+          <p>Profile: <a href={props.followerData.html_url}>{props.followerData.html_url}</a></p>
+          <p>Followers: {props.followerData.followers}</p>
+          <p>Following: {props.followerData.following}</p>
+          <p>Bio: {props.followerData.bio}</p>
         </div>
-      </Card> */}
+      </Card>
     </Main>
   )
 }
 
 export default UserCard;
+

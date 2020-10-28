@@ -6,14 +6,24 @@ import UserCard, {FollowerCard} from './components/User'
 class App extends React.Component {
   state = {
     userData: [],
-    followerData: []
+    followerData: [],
+    newFollower: []
   }
 
   fetchFollower = () => {
     axios.get('https://api.github.com/users/JuniorDugue/followers')
       .then(res=>{
         this.setState({followerData: res.data})
+        this.state.followerData.forEach(item=>{
+          axios.get(item.url)
+            .then(res=>{
+              this.state.newFollower.push(res.data)
+              this.setState({followerData: this.state.newFollower})
+            })
+            .catch(err=>{debugger})
+        })
       })
+      .catch(err=>{debugger})
   }
 
   componentDidMount() {
@@ -29,9 +39,9 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        {/* {this.state.userData.map(user => <UserCard userData={user} />)} */}
         <UserCard userData={this.state.userData} />
-        <FollowerCard followerData={this.state.followerData} />
+        {this.state.followerData.map(user => <FollowerCard followerData={user} key={user.id} />)}
+        {/* {this.state.followerData.map(user => <FollowerCard followerData={user} key={user.id} />)} */}
       </div>  
     )
   }
